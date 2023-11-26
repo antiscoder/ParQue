@@ -1,13 +1,26 @@
-import React, { useState } from 'react'
-import './LoginSignup.css'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-import user_icon from '../Assets/person.png'
-import email_icon from '../Assets/email.png'
-import password_icon from '../Assets/password.png'
+import './LoginSignup.css';
+import user_icon from '../Assets/person.png';
+import email_icon from '../Assets/email.png';
+import password_icon from '../Assets/password.png';
 
 export const LoginSignup = () => {
+  const [action, setAction] = useState("Sign Up");
+  const navigate = useNavigate(); // Initialize useNavigate
 
-const [action,setAction] = useState("Sign Up");
+  const handleSignUpClick = () => {
+    setAction("Sign Up");
+    // Use navigate to go to the sign-up page
+    navigate('/sign-up');
+  };
+
+  const handleLoginClick = () => {
+    setAction("Login");
+    // Use navigate to go to the login page
+    navigate('/login');
+  };
 
   return (
     <div className='container'>
@@ -49,3 +62,4 @@ const [action,setAction] = useState("Sign Up");
     </div>
   )
 }
+
