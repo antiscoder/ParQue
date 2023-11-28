@@ -1,0 +1,45 @@
+/* Account.css */
+
+.account-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    padding: 20px;
+  }
+  
+  .account-header {
+    color: #ffffff;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .subheader {
+    color: #ffffff;
+    margin-right: 10px;
+  }
+  
+  .line {
+    width: 100%; /* Make the line span the full width of the container */
+    height: 1px; /* Set the height of the line */
+    background-color: #ffffff; /* Set the line color to white */
+    margin-top: 5px; /* Add margin to separate the line from the text */
+  }
+  
+  .additional-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px; /* Adjust the margin based on your preference */
+  }
+  
+  .info-item {
+    color: #ffffff;
+    margin-bottom: 10px; /* Adjust the margin between items based on your preference */
+  }
+  
+  .label {
+    font-weight: bold;
+    margin-right: 10px; /* Adjust the margin between label and value based on your preference */
+  }
