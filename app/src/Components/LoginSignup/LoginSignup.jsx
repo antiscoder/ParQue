@@ -5,21 +5,35 @@ import './LoginSignup.css';
 import user_icon from '../Assets/person.png';
 import email_icon from '../Assets/email.png';
 import password_icon from '../Assets/password.png';
+import { addUser } from '../../sqldb';
+
 
 export const LoginSignup = () => {
   const [action, setAction] = useState("Sign Up");
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSignUpClick = () => {
-    setAction("Sign Up");
     // Use navigate to go to the sign-up page
-    navigate('/sign-up');
+    if(action === "Sign Up"){
+      addUser("test_name", "test_email", "test_password")
+      setAction("Login");
+    }
+    else{
+      setAction("Sign Up");
+    }
+    
   };
 
   const handleLoginClick = () => {
-    setAction("Login");
     // Use navigate to go to the login page
-    navigate('/login');
+
+    if(action === "Login"){
+      navigate('/');
+    }
+    else{
+      setAction("Login");
+    }
+    
   };
 
   return (
@@ -56,8 +70,8 @@ export const LoginSignup = () => {
   </div>
 ) : null}
         <div className="submit-container">
-            <div className={action==="Login"?"submit grey":"submit"} onClick={()=>{setAction("Sign Up")}}>Sign Up</div>
-            <div className={action==="Sign Up"?"submit grey":"submit"} onClick={()=>{setAction("Login")}}>Login</div>
+            <div className={action==="Login"?"submit grey":"submit"} onClick={()=>{handleSignUpClick()}}>Sign Up</div>
+            <div className={action==="Sign Up"?"submit grey":"submit"} onClick={()=>{handleLoginClick()}}>Login</div>
         </div>
     </div>
   )

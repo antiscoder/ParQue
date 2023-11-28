@@ -2,8 +2,15 @@
 
 import React from 'react';
 import './Account.css';
+import { useNavigate } from 'react-router-dom';
 
 const Account = () => {
+  const navigate = useNavigate();
+
+  const handleLogOutClick = () => {
+    navigate('/');
+  
+  };
   return (
     <div className="account-container">
       <h1 className="account-header">Account</h1>
@@ -25,7 +32,7 @@ const Account = () => {
         {/* Add other content of the Account page here */}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
-        <button style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
+        <button onClick={()=>{handleLogOutClick()}} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
           Log Out
         </button>
       </div>

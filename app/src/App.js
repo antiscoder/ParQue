@@ -5,6 +5,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LoginSignup } from './Components/LoginSignup/LoginSignup';
 import Home from './Components/Home/Home'; // Import the Home component
 import Account from './Components/Account/Account';
+import { createUsersTable } from './sqldb';
+
+createUsersTable();
+
 
 const App = () => {
   return (

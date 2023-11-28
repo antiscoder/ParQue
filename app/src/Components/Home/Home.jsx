@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
+  };
+
+  const handleAccountClick = () => {
+    navigate('/account');
+
   };
 
   return (
@@ -37,7 +44,7 @@ const Home = () => {
         </button>
       </div>
       <div style={{ marginRight: '900px', marginTop: '550px' }}>
-        <button style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
+        <button onClick={()=>{handleAccountClick()}} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
           Account
         </button>
       </div>
