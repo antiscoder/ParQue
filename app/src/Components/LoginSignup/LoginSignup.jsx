@@ -9,16 +9,26 @@ import { addUser } from '../../sqldb';
 
 
 export const LoginSignup = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const [action, setAction] = useState("Sign Up");
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSignUpClick = () => {
     // Use navigate to go to the sign-up page
-    if(action === "Sign Up"){
-      addUser("test_name", "test_email", "test_password")
+    if(action === "Sign Up" && name !== "" && email !== "" && password !== ""){
+      addUser(name, email, password);
+      setName("");
+      setEmail("");
+      setPassword("");
       setAction("Login");
     }
-    else{
+    else if(action === "Login"){
+      setName("");
+      setEmail("");
+      setPassword("");
       setAction("Sign Up");
     }
     
@@ -27,13 +37,29 @@ export const LoginSignup = () => {
   const handleLoginClick = () => {
     // Use navigate to go to the login page
 
-    if(action === "Login"){
+    if(action === "Login" && email !== "" && password !== ""){
+      setName("");
+      setEmail("");
+      setPassword("");
       navigate('/');
     }
-    else{
+    else if(action === "Sign Up"){
+      setName("");
+      setEmail("");
+      setPassword("");
       setAction("Login");
     }
     
+  };
+
+  const nameChange = event => {
+    setName(event.target.value)
+  };
+  const emailChange = event => {
+    setEmail(event.target.value)
+  };
+  const passwordChange = event => {
+    setPassword(event.target.value)
   };
 
   return (
@@ -45,15 +71,15 @@ export const LoginSignup = () => {
         <div className="inputs">
             {action==="Login"?<div></div>:<div className="input">
                 <img src={user_icon} alt="" />
-                <input type="text" placeholder="Name"/>
+                <input onChange={nameChange} value = {name} type="text" placeholder="Name"/>
             </div>}
             <div className="input">
                 <img src={email_icon} alt="" />
-                <input type="email" placeholder="Email"/>
+                <input onChange={emailChange} value = {email} type="email" placeholder="Email"/>
             </div>
             <div className="input">
                 <img src={password_icon} alt="" />
-                <input type="password" placeholder="Password"/>
+                <input onChange={passwordChange} value = {password} type="password" placeholder="Password"/>
             </div>
         </div>
 {/* Render the "Forgot Password? Click Here" container on the Login page */}

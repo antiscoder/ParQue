@@ -9,7 +9,7 @@ const SQL = await initSqlJs({
 const db = new SQL.Database();
 
 export function createUsersTable() {
-    let sqlstr = "CREATE TABLE users (id int, name char, email char, password char);";
+    let sqlstr = "CREATE TABLE users (id INTEGER PRIMARY KEY, name char, email char, password char);";
 
     db.run(sqlstr);
 }
@@ -21,15 +21,15 @@ export function createStructuresTable() {
 }
 
 export function createSpotTable() {
-    let sqlstr = "CREATE TABLE spots (id int, structureid int);";
+    let sqlstr = "CREATE TABLE spots (id int, structureid int, occupied bool);";
 
     db.run(sqlstr);
 }
 
 export function addUser(name, email, password) {
-    const stmt = db.prepare("INSERT INTO users VALUES (:dval, :aval, :bval, :cval);");
-    const sqlstr = stmt.getAsObject({':dval' : 1, ':aval' : name, ':bval' : email, ':cval' : email});
+    const stmt = db.prepare("INSERT INTO users (name, email, password) VALUES (:aval, :bval, :cval);");
+    const sqlstr = stmt.getAsObject({':aval' : name, ':bval' : email, ':cval' : password});
 
     db.run(sqlstr);
-    console.log(db.exec("select name from users"));
+    console.log(db.exec("select * from users"));
 }
