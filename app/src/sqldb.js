@@ -33,3 +33,10 @@ export function addUser(name, email, password) {
     db.run(sqlstr);
     console.log(db.exec("select * from users"));
 }
+
+export function containsEmail(email) {
+    const stmt = db.prepare("SELECT * FROM users WHERE email=:aval");
+    const sqlstr = stmt.getAsObject({':aval' : email});
+
+    return sqlstr.email === email;
+}
