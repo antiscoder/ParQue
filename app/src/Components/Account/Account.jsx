@@ -9,8 +9,12 @@ const Account = () => {
 
   const handleLogOutClick = () => {
     navigate('/');
-  
   };
+
+  const handleHomeClick = () => {
+    navigate('/home');
+  };
+
   return (
     <div className="account-container">
       <h1 className="account-header">Account</h1>
@@ -35,6 +39,11 @@ const Account = () => {
         <button onClick={()=>{handleLogOutClick()}} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
           Log Out
         </button>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
+        <button onClick={()=>{handleHomeClick()}} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
+          Back to Home
+        </button>
+      </div>
       </div>
     </div>
   );
