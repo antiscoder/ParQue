@@ -1,3 +1,5 @@
+// Home.jsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,7 +13,10 @@ const Home = () => {
 
   const handleAccountClick = () => {
     navigate('/account');
+  };
 
+  const handleJoinQueueClick = () => {
+    navigate('/joinQueue');
   };
 
   return (
@@ -39,11 +44,11 @@ const Home = () => {
         )}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
-        <button style={{ backgroundColor: '#78B0E8', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
+        <button onClick={()=>{handleJoinQueueClick()}} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
           Join Queue
         </button>
       </div>
-      <div style={{ marginRight: '900px', marginTop: '550px' }}>
+      <div style={{marginTop: '20px' }}>
         <button onClick={()=>{handleAccountClick()}} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
           Account
         </button>
