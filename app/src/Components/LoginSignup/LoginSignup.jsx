@@ -5,7 +5,7 @@ import './LoginSignup.css';
 import user_icon from '../Assets/person.png';
 import email_icon from '../Assets/email.png';
 import password_icon from '../Assets/password.png';
-import { addUser, containsEmail } from '../../sqldb';
+import { addUser, containsEmail, loginAuth } from '../../sqldb';
 
 
 export const LoginSignup = () => {
@@ -36,9 +36,9 @@ export const LoginSignup = () => {
 
   const handleLoginClick = () => {
     // Use navigate to go to the login page
-    console.log(containsEmail(email));
+    console.log(loginAuth(email, password));
     if(action === "Login" && email !== "" && password !== ""){
-      if (containsEmail(email)){
+      if (loginAuth(email, password)){
         navigate('/');
       }
     }

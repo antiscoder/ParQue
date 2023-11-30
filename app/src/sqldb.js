@@ -9,7 +9,7 @@ const SQL = await initSqlJs({
 const db = new SQL.Database();
 
 export function createUsersTable() {
-    let sqlstr = "CREATE TABLE users (id INTEGER PRIMARY KEY, name char, email char, password char);";
+     let sqlstr = "CREATE TABLE users (id INTEGER PRIMARY KEY, name char, email char, password char);";
 
     db.run(sqlstr);
 }
@@ -34,9 +34,9 @@ export function addUser(name, email, password) {
     console.log(db.exec("select * from users"));
 }
 
-export function containsEmail(email) {
+export function loginAuth(email, password) {
     const stmt = db.prepare("SELECT * FROM users WHERE email=:aval");
     const sqlstr = stmt.getAsObject({':aval' : email});
 
-    return sqlstr.email === email;
+    return sqlstr.email === email && sqlstr.password === password;
 }
