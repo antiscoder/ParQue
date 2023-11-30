@@ -5,7 +5,7 @@ import './LoginSignup.css';
 import user_icon from '../Assets/person.png';
 import email_icon from '../Assets/email.png';
 import password_icon from '../Assets/password.png';
-import { addUser } from '../../sqldb';
+import { addUser, containsEmail, loginAuth } from '../../sqldb';
 
 
 export const LoginSignup = () => {
@@ -13,7 +13,7 @@ export const LoginSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [action, setAction] = useState("Sign Up");
+  const [action, setAction] = useState("Login");
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSignUpClick = () => {
@@ -36,20 +36,18 @@ export const LoginSignup = () => {
 
   const handleLoginClick = () => {
     // Use navigate to go to the login page
-
+    console.log(loginAuth(email, password));
     if(action === "Login" && email !== "" && password !== ""){
-      setName("");
-      setEmail("");
-      setPassword("");
-      navigate('/');
+      if (loginAuth(email, password)){
+        navigate('/');
+      }
     }
     else if(action === "Sign Up"){
-      setName("");
-      setEmail("");
-      setPassword("");
       setAction("Login");
     }
-    
+    setName("");
+    setEmail("");
+    setPassword("");
   };
 
   const nameChange = event => {
@@ -84,8 +82,8 @@ export const LoginSignup = () => {
         </div>
 {/* Render the "Forgot Password? Click Here" container on the Login page */}
 {action === "Login" ? (
-  <div className="forgot-password">
-    Forgot Password? <span>Click Here</span>
+  <div className="forgot-password" onClick={() => setAction("Sign Up")}>
+    Need an account? <span>Click Here</span>
   </div>
 ) : null}
 
@@ -96,8 +94,9 @@ export const LoginSignup = () => {
   </div>
 ) : null}
         <div className="submit-container">
-            <div className={action==="Login"?"submit grey":"submit"} onClick={()=>{handleSignUpClick()}}>Sign Up</div>
-            <div className={action==="Sign Up"?"submit grey":"submit"} onClick={()=>{handleLoginClick()}}>Login</div>
+          {action==="Sign Up"?
+            <div className="submit" onClick={()=>{handleSignUpClick()}}>Sign Up</div>:
+            <div className="submit" onClick={()=>{handleLoginClick()}}>Login</div>}
         </div>
     </div>
   )
