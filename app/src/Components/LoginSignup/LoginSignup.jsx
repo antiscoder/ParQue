@@ -39,7 +39,7 @@ export const LoginSignup = () => {
     console.log(containsEmail(email));
     if(action === "Login" && email !== "" && password !== ""){
       if (containsEmail(email)){
-        navigate('/');
+        navigate('/home');
       }
     }
     else if(action === "Sign Up"){

@@ -8,11 +8,13 @@ const SQL = await initSqlJs({
 
 const db = new SQL.Database();
 
-export function createUsersTable() {
-    let sqlstr = "CREATE TABLE users (id INTEGER PRIMARY KEY, name char, email char, password char);";
 
+
+export function createUsersTable() {
+    let sqlstr = "CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, email TEXT, password TEXT);";
     db.run(sqlstr);
 }
+
 
 export function createStructuresTable() {
     let sqlstr = "CREATE TABLE structures (id int, name char);";
@@ -28,11 +30,22 @@ export function createSpotTable() {
 
 export function addUser(name, email, password) {
     const stmt = db.prepare("INSERT INTO users (name, email, password) VALUES (:aval, :bval, :cval);");
-    const sqlstr = stmt.getAsObject({':aval' : name, ':bval' : email, ':cval' : password});
+    stmt.run({ ':aval': name, ':bval': email, ':cval': password });
 
-    db.run(sqlstr);
-    console.log(db.exec("select * from users"));
+    // Log the new entry to the console
+    console.log(`New user added: ${name}, ${email}, ${password}`);
+    console.log(db.exec("SELECT * FROM users"));
 }
+
+
+
+export function getUserInfo(userId) {
+    const stmt = db.prepare("SELECT * FROM users WHERE id=:aval");
+    const userInfo = stmt.getAsObject({ ':aval': userId });
+    return userInfo;
+  }
+  
+
 
 export function containsEmail(email) {
     const stmt = db.prepare("SELECT * FROM users WHERE email=:aval");
