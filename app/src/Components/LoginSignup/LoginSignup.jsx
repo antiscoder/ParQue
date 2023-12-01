@@ -40,13 +40,12 @@ export const LoginSignup = () => {
       if (loginAuth(email, password)){
         navigate('/home');
       }
-      else{
+      else if(action === "Sign Up"){
+        setAction("Login");
+      }
+      else {
         window.alert("Incorrect Email or Password");
       }
-    }
-    else if(action === "Sign Up"){
-      setAction("Login");
-    }
     setName("");
     setEmail("");
     setPassword("");
