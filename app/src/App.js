@@ -10,6 +10,7 @@ import WaitTimeNorth from './Components/WaitTimeNorth/WaitTimeNorth';
 import WaitTimeWest from './Components/WaitTimeWest/WaitTimeWest';
 import WaitTimeSouth from './Components/WaitTimeSouth/WaitTimeSouth';
 import RemainingTime from './Components/RemainingTime/RemainingTime';
+import ParkingGuide from './Components/ParkingGuide/ParkingGuide';
 import { createUsersTable } from './sqldb';
 
 createUsersTable();
@@ -46,6 +47,9 @@ const App = () => {
 
         {/* This route may need to be updated based on the final route */}
         <Route path="/remainingtime" element={<RemainingTime />} />
+
+        {/* This route may need to be updated based on the final route */}
+        <Route path="/parkingguide" element={<ParkingGuide />} />
 
 
       </Routes>

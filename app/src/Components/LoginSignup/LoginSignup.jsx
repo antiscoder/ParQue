@@ -37,7 +37,6 @@ export const LoginSignup = () => {
   const handleLoginClick = () => {
     // Use navigate to go to the login page
     console.log(loginAuth(email, password));
-    if(action === "Login" && email !== "" && password !== ""){
       if (loginAuth(email, password)){
         navigate('/home');
       }
