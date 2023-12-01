@@ -15,6 +15,8 @@ import { createUsersTable } from './sqldb';
 
 createUsersTable();
 
+export let queue = [44, 55, 66, 33];
+
 const App = () => {
   return (
     <Router>
