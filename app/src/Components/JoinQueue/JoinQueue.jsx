@@ -1,25 +1,47 @@
 // JoinQueue.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import './JoinQueue.css';
 import { useNavigate } from 'react-router-dom';
-
+import { getUserId, addUserToQueue, getQueue } from '../../sqldb';
 const JoinQueue = () => {
+
+  const [queue, setQueue] = useState("");
+
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
     navigate('/home');
   };
 
-  const handleNorthClick = () => {
+  const userId = getUserId();
+  console.log('User ID:', userId);
+  
+  if (userId !== undefined) {
+    addUserToQueue('north_queue', userId);
+    console.log('Queue after adding user:', getQueue('north_queue'));
+    setQueue(getQueue('north_queue'));
+    navigate('./waittimenorth');
+  }
+  
+  const handleNorthClick = async () => {
+    const userId = getUserId(); // Get the user ID (implement this function)
+    addUserToQueue('north_queue', userId); // Add user to the north_queue (implement this function)
+    setQueue(await getQueue('north_queue')); // Get the updated north_queue (implement this function)
     navigate('./waittimenorth');
   };
 
-  const handleWestClick = () => {
+  const handleWestClick = async () => {
+    const userId = getUserId(); // Get the user ID
+    addUserToQueue('west_queue', userId); // Add user to the west_queue
+    setQueue(await getQueue('west_queue')); // Get the updated west_queue
     navigate('./waittimewest');
   };
 
-  const handleSouthClick = () => {
+  const handleSouthClick = async () => {
+    const userId = getUserId(); // Get the user ID
+    addUserToQueue('south_queue', userId); // Add user to the south_queue
+    setQueue(await getQueue('south_queue')); // Get the updated south_queue
     navigate('./waittimesouth');
   };
 
