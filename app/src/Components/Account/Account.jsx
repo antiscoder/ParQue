@@ -3,8 +3,17 @@
 import React from 'react';
 import './Account.css';
 import { useNavigate } from 'react-router-dom';
+import { getUserInfo, getUserId } from '../../sqldb';
+import { currentUser } from '../../App';
 
 const Account = () => {
+
+  const userId = getUserId(currentUser.getEmail);
+  const userInfo = getUserInfo(userId);
+  const name = userInfo.name;
+  const email = userInfo.email;
+  console.log(userInfo);
+
   const navigate = useNavigate();
 
   const handleLogOutClick = () => {
@@ -18,11 +27,11 @@ const Account = () => {
   return (
     <div className="account-container">
       <h1 className="account-header">Account</h1>
-      <h3 className="subheader">First Last</h3>
+      <h3 className="subheader">{name}</h3>
       <div className="line"></div>
       <div className="additional-info">
         <p className="info-item">
-          <span className="label">Username:</span> admin@sjsu.edu
+          <span className="label">Email:</span> {email}
         </p>
         <p className="info-item">
           <span className="label">Student ID:</span> 012345678

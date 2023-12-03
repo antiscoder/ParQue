@@ -6,6 +6,7 @@ import user_icon from '../Assets/person.png';
 import email_icon from '../Assets/email.png';
 import password_icon from '../Assets/password.png';
 import { addUser, containsEmail, loginAuth } from '../../sqldb';
+import { currentUser } from '../../App';
 
 
 export const LoginSignup = () => {
@@ -38,7 +39,9 @@ export const LoginSignup = () => {
     // Use navigate to go to the login page
     console.log(loginAuth(email, password));
       if (loginAuth(email, password)){
+        currentUser.setEmail = email;
         navigate('/home');
+        console.log(currentUser.getEmail);
       }
       else if(action === "Sign Up"){
         setAction("Login");

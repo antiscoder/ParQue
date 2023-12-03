@@ -28,8 +28,8 @@ export function addUser(name, email, password) {
   stmt.run({ ':aval': name, ':bval': email, ':cval': password });
 
   // Log the new entry to the console
-  console.log(`New user added: ${name}, ${email}, ${password}`);
-  console.log(db.exec("SELECT * FROM users"));
+  //console.log(`New user added: ${name}, ${email}, ${password}`);
+  //console.log(db.exec("SELECT * FROM users"));
 }
 
 export function getUserInfo(userId) {
@@ -45,40 +45,9 @@ export function loginAuth(email, password) {
   return sqlstr.email === email && sqlstr.password === password;
 }
 
-export function createNorthQueueTable() {
-    let sqlstr = "CREATE TABLE north_queue (id INTEGER PRIMARY KEY, user_id INTEGER);";
-    db.run(sqlstr);
-  }
-  
-  export function createWestQueueTable() {
-    let sqlstr = "CREATE TABLE west_queue (id INTEGER PRIMARY KEY, user_id INTEGER);";
-    db.run(sqlstr);
-  }
-  
-  export function createSouthQueueTable() {
-    let sqlstr = "CREATE TABLE south_queue (id INTEGER PRIMARY KEY, user_id INTEGER);";
-    db.run(sqlstr);
-  }
-
   export function getUserId(email) {
-    const stmt = db.prepare("SELECT id FROM users WHERE email=:aval");
-    const user = stmt.getAsObject({ ':aval': email });
-  
-    console.log('getUserId: email, user', email, user);
-  
-    return user ? user.id : undefined;
-  }
+    const stmt = db.prepare("SELECT * FROM users WHERE email=:aval");
+    const sqlstr = stmt.getAsObject({ ':aval': email });
 
-  export function addUserToQueue(queueName, userId) {
-    const stmt = db.prepare(`INSERT INTO ${queueName} (user_id) VALUES (?);`);
-  
-    console.log('addUserToQueue: queueName, userId', queueName, userId);
-  
-    stmt.run(userId);
-  }
-  
-  export function getQueue(queueName) {
-    // Get the list of users in the specified queue
-    const stmt = db.prepare(`SELECT * FROM ${queueName};`);
-    return stmt.all();
+    return sqlstr.id;
   }

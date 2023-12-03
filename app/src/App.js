@@ -15,7 +15,25 @@ import { createUsersTable } from './sqldb';
 
 createUsersTable();
 
-export let queue = [44, 55, 66, 33];
+export let north_queue = [44, 55, 33];
+
+export let west_queue = [44, 55, 33];
+
+export let south_queue = [44, 55, 33];
+
+export function addUserToQueue(queueName, userID) {
+  queueName.push(userID);
+}
+
+export let currentUser = {
+  email: '',
+  set setEmail(newEmail){
+    this.email = newEmail;
+  },
+  get getEmail(){
+    return this.email;
+  }
+};
 
 const App = () => {
   return (
