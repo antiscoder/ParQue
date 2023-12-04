@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './WaitTimeWest.css';
-import {queue} from '../../App';
+import {west_queue} from '../../App';
 
 const WaitTimeWest = () => {
-  const [minutes, setMinutes] = useState(queue.length);
+  const [minutes, setMinutes] = useState(west_queue.length);
   const [seconds, setSeconds] = useState(0);
   const [milliseconds, setMilliseconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
@@ -42,7 +42,7 @@ const WaitTimeWest = () => {
     <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Est. Wait Time for West Garage</h1>      
     {/* You can add other content or components here */}
     <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto',fontSize: '100px' }}>{minutes}:{seconds}</h1>    
-    <h2 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Queue Position: {queue.length}</h2>        
+    <h2 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Queue Position: {west_queue.length}</h2>        
       <button onClick={handleJoinQueueClick} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px',  marginBottom: '100px'  }}>
         Leave Queue
         </button>
