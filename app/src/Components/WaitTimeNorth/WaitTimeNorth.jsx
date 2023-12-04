@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './WaitTimeNorth.css';
-import { north_queue } from '../../App';
+import { getUserId } from '../../sqldb';
+import { currentUser, north_queue } from '../../App';
 
 const WaitTimeNorth = () => {
   const [minutes, setMinutes] = useState(0);
@@ -36,23 +37,32 @@ const WaitTimeNorth = () => {
   }, [milliseconds, seconds, minutes, isRunning]);
 
   const navigate = useNavigate();
+  const userId = getUserId(currentUser.getEmail);
 
-  const handleJoinQueueClick = () => {
-    // Navigate back to the queue page
-    navigate('/joinqueue');
+  const handleLeaveQueueClick = () => {
+    // Remove user from the north_queue
+    const index = north_queue.indexOf(userId);
+    if (index !== -1) {
+      north_queue.splice(index, 1);
+    }
+    // Navigate to the home page or another appropriate location
+    navigate('/home');
   };
 
   const handleReadyToParkClick = () => {
     // Handle the "Ready to Park" action
-    // This could include any logic you need when the user is ready to park
     navigate('/parkingguide');
   };
+
+  const handleHomeClick = () => {
+    navigate('/home');
+  }
 
   return (
     <div className="wait-time-container">
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>North Garage</h1>
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>Estimated Waiting Time</h1>
-      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>{minutes} mins, {seconds} secs </h1>
+      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>{minutes} mins, {seconds} </h1>
       <h2 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Queue Position: {north_queue.length}</h2>
 
       {/* Conditionally render the button based on the timer state */}
@@ -61,10 +71,13 @@ const WaitTimeNorth = () => {
           Ready to Park
         </button>
       ) : (
-        <button onClick={handleJoinQueueClick} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginBottom: '100px' }}>
+        <button onClick={handleLeaveQueueClick} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginBottom: '100px' }}>
           Leave Queue
         </button>
       )}
+        <button onClick={handleHomeClick} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginBottom: '100px' }}>
+          Back To Home
+      </button>
     </div>
   );
 };

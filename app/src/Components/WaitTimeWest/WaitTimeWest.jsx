@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './WaitTimeWest.css';
-import { west_queue } from '../../App';
+import { currentUser, west_queue } from '../../App';
+import { getUserId } from '../../sqldb';
 
 const WaitTimeWest = () => {
   const [minutes, setMinutes] = useState(west_queue.length);
@@ -36,13 +37,23 @@ const WaitTimeWest = () => {
 
   const navigate = useNavigate();
 
-  const handleJoinQueueClick = () => {
-    navigate('/joinqueue');
+  const userId = getUserId(currentUser.getEmail);
+
+  const handleLeaveQueueClick = () => {
+    const index = west_queue.indexOf(userId);
+    if (index !== -1) {
+      west_queue.splice(index, 1);
+    }
+    navigate('/home');
   };
 
   const handleReadyToParkClick = () => {
     navigate('/parkingguide');
   };
+
+  const handleHomeClick = () => {
+    navigate('/home');
+  }
 
   return (
     <div className="wait-time-container">
@@ -56,10 +67,13 @@ const WaitTimeWest = () => {
           Ready to Park
         </button>
       ) : (
-        <button onClick={handleJoinQueueClick} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginBottom: '100px' }}>
+        <button onClick={handleLeaveQueueClick} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginBottom: '100px' }}>
           Leave Queue
         </button>
       )}
+      <button onClick={handleHomeClick} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginBottom: '100px' }}>
+          Back To Home
+      </button>
     </div>
   );
 };

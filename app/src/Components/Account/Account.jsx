@@ -1,20 +1,24 @@
 // Account.jsx
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Account.css';
 import { useNavigate } from 'react-router-dom';
 import { getUserInfo, getUserId } from '../../sqldb';
 import { currentUser } from '../../App';
 
 const Account = () => {
-
-  const userId = getUserId(currentUser.getEmail);
-  const userInfo = getUserInfo(userId);
-  const name = userInfo.name;
-  const email = userInfo.email;
-  console.log(userInfo);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch user information when the component mounts
+    const userId = getUserId(currentUser.getEmail);
+    const userInfo = getUserInfo(userId);
+    setName(userInfo.name);
+    setEmail(userInfo.email);
+  }, []);
 
   const handleLogOutClick = () => {
     navigate('/');
@@ -26,8 +30,7 @@ const Account = () => {
 
   return (
     <div className="account-container">
-      <h1 className="account-header">Account</h1>
-      <h3 className="subheader">{name}</h3>
+      <h1 className="account-header">{name}'s Account</h1>
       <div className="line"></div>
       <div className="additional-info">
         <p className="info-item">
@@ -45,14 +48,14 @@ const Account = () => {
         {/* Add other content of the Account page here */}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
-        <button onClick={()=>{handleHomeClick()}} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
+        <button onClick={() => handleHomeClick()} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
           Back to Home
         </button>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
-        <button onClick={()=>{handleLogOutClick()}} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
-          Log Out
-        </button>
-      </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
+          <button onClick={() => handleLogOutClick()} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px' }}>
+            Log Out
+          </button>
+        </div>
       </div>
     </div>
   );

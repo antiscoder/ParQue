@@ -22,9 +22,12 @@ const ParkingGuide = () => {
 
   const handleSetDuration = () => {
     const selectedDuration = parseInt(selectedHour) * 60 + parseInt(selectedMinute);
+    console.log("Selected Duration:", selectedDuration);
     setIsRunning(true);
-    navigate(`/remainingtime`);
+    navigate(`/remainingtime/${selectedDuration}`);
   };
+  
+  
 
   const renderOptions = (maxValue, step = 1) => {
     const options = [];
