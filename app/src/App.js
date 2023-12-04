@@ -14,7 +14,6 @@ import RemainingTime from './Components/RemainingTime/RemainingTime';
 import ParkingGuide from './Components/ParkingGuide/ParkingGuide';
 import ParkingDuration from './Components/ParkingDuration/ParkingDuration';
 import { createUsersTable } from './sqldb';
-import { ParkingProvider } from './Components/ParkingContext';
 
 createUsersTable();
 

@@ -21,12 +21,13 @@ const WaitTimeWest = () => {
           setMilliseconds((milliseconds) => milliseconds - 1);
         } else if (seconds > 0) {
           setSeconds((seconds) => seconds - 1);
-          setMilliseconds(999); // Change this line to setMilliseconds(999)
+          setMilliseconds(99);
         } else if (minutes > 0) {
           setMinutes((minutes) => minutes - 1);
           setSeconds(59);
-          setMilliseconds(999); // Change this line to setMilliseconds(999)
+          setMilliseconds(99);
         } else {
+          // Timer has expired
           setIsRunning(false);
           setTimerExpired(true);
         }
@@ -58,8 +59,8 @@ const WaitTimeWest = () => {
   return (
     <div className="wait-time-container">
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>West Garage</h1>
-      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>Estimated Waiting Time</h1>
-      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>{minutes} Mins</h1>
+      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '60px', textDecorationLine: 'underline' }}>Est Wait Time</h1>
+      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>{minutes} mins, {seconds} seconds </h1>
       <h2 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Queue Position: {west_queue.length}</h2>
 
       {timerExpired ? (

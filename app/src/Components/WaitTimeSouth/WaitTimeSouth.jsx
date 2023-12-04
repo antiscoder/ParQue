@@ -31,7 +31,7 @@ const WaitTimeSouth = () => {
           setIsRunning(false);
           setTimerExpired(true);
         }
-      }, 1000); // Set interval to 1000 milliseconds for a 1-second countdown
+      }, 10); // Set interval to 1000 milliseconds for a 1-second countdown
     }
     return () => clearInterval(interval);
   }, [milliseconds, seconds, minutes, isRunning]);
@@ -58,8 +58,8 @@ const WaitTimeSouth = () => {
   return (
     <div className="wait-time-container">
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>South Garage</h1>
-      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>Estimated Waiting Time</h1>
-      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>{minutes} Mins</h1>
+      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '60px', textDecorationLine: 'underline' }}>Est Wait Time</h1>
+      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>{minutes} mins, {seconds} seconds </h1>
       <h2 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Queue Position: {south_queue.length}</h2>
 
       {timerExpired ? (
