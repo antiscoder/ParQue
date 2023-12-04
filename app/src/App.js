@@ -1,6 +1,7 @@
 // App.js
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LoginSignup } from './Components/LoginSignup/LoginSignup';
 import Home from './Components/Home/Home';
@@ -13,6 +14,7 @@ import RemainingTime from './Components/RemainingTime/RemainingTime';
 import ParkingGuide from './Components/ParkingGuide/ParkingGuide';
 import ParkingDuration from './Components/ParkingDuration/ParkingDuration';
 import { createUsersTable } from './sqldb';
+import { ParkingProvider } from './Components/ParkingContext';
 
 createUsersTable();
 
@@ -65,7 +67,7 @@ const App = () => {
         <Route path="/joinqueue/waittimesouth" element={<WaitTimeSouth />} />
 
         {/* This route may need to be updated based on the final route */}
-        <Route path="/remainingtime" element={<RemainingTime />} />
+        <Route path="/remainingtime/:selectedDuration" element={<RemainingTime />} />
 
         {/* This route may need to be updated based on the final route */}
         <Route path="/parkingguide" element={<ParkingGuide />} />
@@ -78,5 +80,4 @@ const App = () => {
     </Router>
   );
 };
-
 export default App;
