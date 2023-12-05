@@ -35,8 +35,6 @@ export const ParkingSpot = (props) => {
 };
 
 export const ParkingMap = () => {
-  const [spotID, setSpotID] = useState(3);
-  const [spotOccupied, setSpotOccupied] = useState(2);
   const spots = [];
   for (let i = 0; i < north_parking.getParkingSpots.length; i++) {
       spots.push(<ParkingSpot key={i} id={i} state={north_parking.getParkingSpots[i]} />);
@@ -72,7 +70,7 @@ const ParkingGuide = () => {
       {/* Add your parking guide content here */}
       <ParkingMap />
       {/* Add the "I have Parked" button */}
-      <button onClick={handleParkedClicked} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginTop: '20px', marginBottom: '20px'}}>
+      <button onClick={handleParkedClicked} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginTop: '20px', marginBottom: '150px'}}>
         I Have Parked
       </button>
     </div>

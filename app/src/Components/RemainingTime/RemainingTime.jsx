@@ -4,7 +4,6 @@ import './RemainingTime.css';
 
 const RemainingTime = () => {
   const navigate = useNavigate();
-  const [remainingSeconds, setRemainingSeconds] = useState(0);
 
   const handleExtendTime = () => {
     navigate('/parkingduration');
@@ -16,27 +15,38 @@ const RemainingTime = () => {
   };
 
   const { selectedDuration } = useParams();
-  const [remainingMinutes, setRemainingMinutes] = useState(parseInt(selectedDuration) || 0);
+
+  const [hours, setHours] = useState(Math.floor((parseInt(selectedDuration) || 0) / 60));
+  const [minutes, setMinutes] = useState((parseInt(selectedDuration) || 0) % 60);
+  const [seconds, setSeconds] = useState(0);
+  const [milliseconds, setMilliseconds] = useState(0);
+  const [isRunning, setIsRunning] = useState(true);
+
   
   useEffect(() => {
     let interval;
-  
-    // Initialize remainingMinutes from the route parameter
-    setRemainingMinutes(parseInt(selectedDuration) || 0);
-  
-    if (remainingMinutes > 0 || remainingSeconds > 0) {
+    if (isRunning) {
       interval = setInterval(() => {
-        if (remainingSeconds === 0) {
-          setRemainingMinutes((prev) => Math.max(prev - 1, 0));
-          setRemainingSeconds(59);
-        } else {
-          setRemainingSeconds((prev) => prev - 1);
+        if (milliseconds > 0) {
+          setMilliseconds((milliseconds) => milliseconds - 1);
+        } else if (seconds > 0) {
+          setSeconds((seconds) => seconds - 1);
+          setMilliseconds(99);
+        } else if (minutes > 0) {
+          setMinutes((minutes) => minutes - 1);
+          setSeconds(59);
+          setMilliseconds(99);
+        } else if (hours > 0) {
+          setHours((hours) => hours - 1);
+          setMinutes(59);
+          setSeconds(59);
+          setMilliseconds(99);
         }
-      }, 1000);
+      }, 10);
     }
   
     return () => clearInterval(interval);
-  }, [selectedDuration, remainingMinutes, remainingSeconds]);
+  }, [selectedDuration, milliseconds, seconds, minutes, hours]);
   
   
   return (
@@ -45,7 +55,7 @@ const RemainingTime = () => {
         Remaining Time Left
       </h1>
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>
-        {`${String(remainingMinutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`}
+        {`${String(hours).padStart(2, '0')} : ${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`}
       </h1>
       <button
         onClick={handleExtendTime}
