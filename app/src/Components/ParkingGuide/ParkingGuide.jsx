@@ -5,9 +5,9 @@ import './ParkingGuide.css';
 import { useNavigate } from 'react-router-dom';
 import { currentUser, currentStructure, north_parking, south_parking, west_parking } from '../../App';
 
-export const ParkingSpot = () => {
-  const [spotID, setSpotID] = useState(3);
-  const [spotOccupied, setSpotOccupied] = useState(2);
+export const ParkingSpot = (props) => {
+  const [spotID, setSpotID] = useState(props.id);
+  const [spotOccupied, setSpotOccupied] = useState(props.state);
 
   const handleSelectSpot = () => {
     let updatedState = spotOccupied;
@@ -24,7 +24,7 @@ export const ParkingSpot = () => {
   };
 
   return (
-    <td className='inlineCell'>
+    <td>
       {spotOccupied===0?
         <button onClick={handleSelectSpot} style={{ backgroundColor: '#DF7070', color: 'white', padding: '30px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px'}}>{spotID}</button>:
         spotOccupied===1?
@@ -35,9 +35,11 @@ export const ParkingSpot = () => {
 };
 
 export const ParkingMap = () => {
+  const [spotID, setSpotID] = useState(3);
+  const [spotOccupied, setSpotOccupied] = useState(2);
   const spots = [];
   for (let i = 0; i < north_parking.getParkingSpots.length; i++) {
-      spots.push(<ParkingSpot key={i} />);
+      spots.push(<ParkingSpot key={i} id={i} state={north_parking.getParkingSpots[i]} />);
   }
 
   var rows = [], size = 4;

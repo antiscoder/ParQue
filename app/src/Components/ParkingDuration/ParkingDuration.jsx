@@ -54,7 +54,7 @@ const ParkingGuide = () => {
           {renderOptions(12)}
         </select>
 
-        <label htmlFor="minuteInput">Select Minute: </label>
+        <label htmlFor="minuteInput">  Select Minute: </label>
         <select
           id="minuteInput"
           value={selectedMinute}
@@ -68,7 +68,7 @@ const ParkingGuide = () => {
         <button
           onClick={handleSetDuration}
           style={{
-            backgroundColor: 'green',
+            backgroundColor: '#9DE592',
             color: 'white',
             padding: '15px',
             border: 'none',
