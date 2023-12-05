@@ -9,6 +9,8 @@ import { currentUser } from '../../App';
 const Account = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [studentid, setStudentId] = useState("");
+  const [phone, setPhone] = useState("");
 
   const navigate = useNavigate();
 
@@ -18,6 +20,8 @@ const Account = () => {
     const userInfo = getUserInfo(userId);
     setName(userInfo.name);
     setEmail(userInfo.email);
+    setStudentId(userInfo.studentid);
+    setPhone(userInfo.phone);
   }, []);
 
   const handleLogOutClick = () => {
@@ -37,13 +41,10 @@ const Account = () => {
           <span className="label">Email:</span> {email}
         </p>
         <p className="info-item">
-          <span className="label">Student ID:</span> 012345678
+          <span className="label">Student ID:</span> {studentid}
         </p>
         <p className="info-item">
-          <span className="label">Phone Number:</span> (408) 123-4567
-        </p>
-        <p className="info-item">
-          <span className="label">Password:</span> ********
+          <span className="label">Phone Number:</span> {phone}
         </p>
         {/* Add other content of the Account page here */}
       </div>
