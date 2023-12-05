@@ -1,6 +1,7 @@
 // App.js
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LoginSignup } from './Components/LoginSignup/LoginSignup';
 import Home from './Components/Home/Home';
@@ -11,6 +12,7 @@ import WaitTimeWest from './Components/WaitTimeWest/WaitTimeWest';
 import WaitTimeSouth from './Components/WaitTimeSouth/WaitTimeSouth';
 import RemainingTime from './Components/RemainingTime/RemainingTime';
 import ParkingGuide from './Components/ParkingGuide/ParkingGuide';
+import ParkingDuration from './Components/ParkingDuration/ParkingDuration';
 import { createUsersTable } from './sqldb';
 
 createUsersTable();
@@ -32,6 +34,46 @@ export let currentUser = {
   },
   get getEmail(){
     return this.email;
+  }
+};
+
+export let currentStructure = {
+  name: '',
+  set setName(newName){
+    this.name = newName;
+  },
+  get getName(){
+    return this.name;
+  }
+};
+
+export let north_parking = {
+  parkingSpots : [0, 0, 1, 0, 0, 0, 0, 0],
+  toggleSpotOccupied : function(id) {
+    this.parkingSpots[id] = !this.parkingSpots[id];
+  },
+  get getParkingSpots(){
+    return this.parkingSpots;
+  }
+};
+
+export let south_parking = {
+  parkingSpots : [0, 0, 1, 0, 0, 0, 0, 0],
+  toggleSpotOccupied : function(id) {
+    this.parkingSpots[id] = !this.parkingSpots[id];
+  },
+  get getParkingSpots(){
+    return this.parkingSpots;
+  }
+};
+
+export let west_parking = {
+  parkingSpots : [0, 0, 1, 0, 0, 0, 0, 0],
+  toggleSpotOccupied : function(id) {
+    this.parkingSpots[id] = !this.parkingSpots[id];
+  },
+  get getParkingSpots(){
+    return this.parkingSpots;
   }
 };
 
@@ -64,15 +106,17 @@ const App = () => {
         <Route path="/joinqueue/waittimesouth" element={<WaitTimeSouth />} />
 
         {/* This route may need to be updated based on the final route */}
-        <Route path="/remainingtime" element={<RemainingTime />} />
+        <Route path="/remainingtime/:selectedDuration" element={<RemainingTime />} />
 
         {/* This route may need to be updated based on the final route */}
         <Route path="/parkingguide" element={<ParkingGuide />} />
+
+        {/* This route may need to be updated based on the final route */}
+        <Route path="/parkingduration" element={<ParkingDuration />} />
 
 
       </Routes>
     </Router>
   );
 };
-
 export default App;

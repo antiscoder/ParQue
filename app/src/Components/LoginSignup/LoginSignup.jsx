@@ -5,6 +5,8 @@ import './LoginSignup.css';
 import user_icon from '../Assets/person.png';
 import email_icon from '../Assets/email.png';
 import password_icon from '../Assets/password.png';
+import phone_icon from '../Assets/phone.png';
+import id_icon from '../Assets/id.png';
 import { addUser, containsEmail, loginAuth } from '../../sqldb';
 import { currentUser } from '../../App';
 
@@ -13,25 +15,30 @@ export const LoginSignup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [studentId, setStudentId] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const [action, setAction] = useState("Login");
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSignUpClick = () => {
     // Use navigate to go to the sign-up page
-    if(action === "Sign Up" && name !== "" && email !== "" && password !== ""){
-      addUser(name, email, password);
-      setName("");
-      setEmail("");
-      setPassword("");
+    if(action === "Sign Up" && name !== "" && email !== "" && studentId !== "" && phoneNumber !== "" && password !== ""){
+      addUser(name, email, studentId, phoneNumber, password);
       setAction("Login");
     }
     else if(action === "Login"){
-      setName("");
-      setEmail("");
-      setPassword("");
       setAction("Sign Up");
     }
+    else{
+      window.alert("Please enter all information!");
+    }
+    setName("");
+    setEmail("");
+    setPassword("");
+    setStudentId("");
+    setPhoneNumber("");
+    
     
   };
 
@@ -49,9 +56,11 @@ export const LoginSignup = () => {
       else {
         window.alert("Incorrect Email or Password");
       }
-    setName("");
-    setEmail("");
-    setPassword("");
+      setName("");
+      setEmail("");
+      setPassword("");
+      setStudentId("");
+      setPhoneNumber("");
   };
 
   const nameChange = event => {
@@ -63,6 +72,12 @@ export const LoginSignup = () => {
   const passwordChange = event => {
     setPassword(event.target.value)
   };
+  const studentIdChange = event => {
+    setStudentId(event.target.value)
+  };
+  const phoneNumberChange = event => {
+    setPhoneNumber(event.target.value)
+  };
 
   return (
     <div className='container'>
@@ -71,14 +86,26 @@ export const LoginSignup = () => {
             <div className="underline"></div>
         </div>
         <div className="inputs">
-            {action==="Login"?<div></div>:<div className="input">
-                <img src={user_icon} alt="" />
-                <input onChange={nameChange} value = {name} type="text" placeholder="Name"/>
-            </div>}
             <div className="input">
                 <img src={email_icon} alt="" />
                 <input onChange={emailChange} value = {email} type="email" placeholder="Email"/>
             </div>
+            {action==="Login"?<div></div>:
+            <React.Fragment>
+              <div className="input">
+                  <img src={user_icon} alt="" />
+                  <input onChange={nameChange} value = {name} type="text" placeholder="Name"/>
+              </div>
+              <div className="input">
+                  <img src={id_icon} alt="" />
+                  <input onChange={studentIdChange} value = {studentId} type="text" placeholder="Student ID"/>
+              </div>
+              <div className="input">
+                  <img src={phone_icon} alt="" />
+                  <input onChange={phoneNumberChange} value = {phoneNumber} type="text" placeholder="Phone Number"/>
+              </div>
+            </React.Fragment>
+            }
             <div className="input">
                 <img src={password_icon} alt="" />
                 <input onChange={passwordChange} value = {password} type="password" placeholder="Password"/>

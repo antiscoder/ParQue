@@ -3,13 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './WaitTimeSouth.css';
-import {south_queue} from '../../App';
+import { currentUser, south_queue, currentStructure } from '../../App';
+import { getUserId } from '../../sqldb';
 
-const WaitTimeSouth= () => {
+
+const WaitTimeSouth = () => {
   const [minutes, setMinutes] = useState(south_queue.length);
   const [seconds, setSeconds] = useState(0);
   const [milliseconds, setMilliseconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
+  const [timerExpired, setTimerExpired] = useState(false);
 
   useEffect(() => {
     let interval;
@@ -24,28 +27,55 @@ const WaitTimeSouth= () => {
           setMinutes((minutes) => minutes - 1);
           setSeconds(59);
           setMilliseconds(99);
-        } 
-      }, 10);
+        } else {
+          setIsRunning(false);
+          setTimerExpired(true);
+        }
+      }, 10); // Set interval to 1000 milliseconds for a 1-second countdown
     }
     return () => clearInterval(interval);
   }, [milliseconds, seconds, minutes, isRunning]);
 
   const navigate = useNavigate();
+  const userId = getUserId(currentUser.getEmail);
 
-  const handleJoinQueueClick = () => {
-    // Navigate back to the queue page
-    navigate('/joinqueue');
+  const handleLeaveQueueClick = () => {
+    const index = south_queue.indexOf(userId);
+    if (index !== -1) {
+      south_queue.splice(index, 1);
+    }
+    navigate('/home');
   };
+
+  const handleReadyToParkClick = () => {
+    currentStructure.setName = "south_parking";
+    navigate('/parkingguide');
+    console.log(currentStructure.getName);
+  };
+
+  const handleHomeClick = () => {
+    navigate('/home');
+  }
 
   return (
     <div className="wait-time-container">
-    <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Est. Wait Time for South Garage</h1>      
-    {/* You can add other content or components here */}
-    <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto',fontSize: '100px' }}>{minutes}:{seconds}</h1>    
-    <h2 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Queue Position: {south_queue.length}</h2>        
-      <button onClick={handleJoinQueueClick} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px',  marginBottom: '100px'  }}>
-        Leave Queue
+      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>South Garage</h1>
+      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '60px', textDecorationLine: 'underline' }}>Est Wait Time</h1>
+      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>{String(minutes).padStart(2, '0')} : {String(seconds).padStart(2, '0')}</h1>
+      <h2 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Queue Position: {south_queue.length}</h2>
+
+      {timerExpired ? (
+        <button onClick={handleReadyToParkClick} style={{ backgroundColor: '#9DE592', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginBottom: '10px' }}>
+          Ready to Park
         </button>
+      ) : (
+        <button onClick={handleLeaveQueueClick} style={{ backgroundColor: '#DF7070', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginBottom: '10px' }}>
+          Leave Queue
+        </button>
+      )}
+      <button onClick={handleHomeClick} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginBottom: '150px' }}>
+          Back To Home
+      </button>
     </div>
   );
 };

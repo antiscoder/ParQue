@@ -9,7 +9,7 @@ const SQL = await initSqlJs({
 const db = new SQL.Database();
 
 export function createUsersTable() {
-  let sqlstr = "CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, email TEXT, password TEXT, zone TEXT);";
+  let sqlstr = "CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, email TEXT, studentid TEXT, phone TEXT, password TEXT, zone TEXT);";
   db.run(sqlstr);
 }
 
@@ -23,9 +23,9 @@ export function createSpotTable() {
   db.run(sqlstr);
 }
 
-export function addUser(name, email, password) {
-  const stmt = db.prepare("INSERT INTO users (name, email, password) VALUES (:aval, :bval, :cval);");
-  stmt.run({ ':aval': name, ':bval': email, ':cval': password });
+export function addUser(name, email, studentid, phone, password) {
+  const stmt = db.prepare("INSERT INTO users (name, email, studentid, phone, password) VALUES (:aval, :bval, :cval, :dval, :eval);");
+  stmt.run({ ':aval': name, ':bval': email, ':cval': studentid, ':dval': phone, ':eval': password });
 
   // Log the new entry to the console
   //console.log(`New user added: ${name}, ${email}, ${password}`);

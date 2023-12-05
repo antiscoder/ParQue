@@ -1,14 +1,22 @@
 // Home.jsx
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { getUserInfo } from '../../sqldb';
+import { getUserInfo, getUserId } from '../../sqldb';
+import { currentUser } from '../../App';
 
 const Home = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
 
-  const [userName, setUserName] = useState('');
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    // Fetch user information when the component mounts
+    const userId = getUserId(currentUser.getEmail);
+    const userInfo = getUserInfo(userId);
+    setName(userInfo.name);
+  }, []);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -25,7 +33,7 @@ const Home = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', height: '100vh' }}>
       <h1 style={{ color: 'white', fontWeight: 'bold' }}>ParQue</h1>
-      <h2 style={{ color: 'white', fontStyle: 'italic' }}>Welcome, {} </h2>
+      <h2 style={{ color: 'white', fontStyle: 'italic' }}>Welcome, {name} </h2>
       <h3 style={{ color: 'white' }}>Welcome to the Home Page!</h3>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
         <p style={{ color: 'white', cursor: 'pointer' }} onClick={toggleDropdown}>
