@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './WaitTimeSouth.css';
-import { currentUser, south_queue } from '../../App';
+import { currentUser, south_queue, currentStructure } from '../../App';
 import { getUserId } from '../../sqldb';
 
 
@@ -48,7 +48,9 @@ const WaitTimeSouth = () => {
   };
 
   const handleReadyToParkClick = () => {
+    currentStructure.setName = "south_parking";
     navigate('/parkingguide');
+    console.log(currentStructure.getName);
   };
 
   const handleHomeClick = () => {

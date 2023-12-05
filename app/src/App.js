@@ -37,6 +37,46 @@ export let currentUser = {
   }
 };
 
+export let currentStructure = {
+  name: '',
+  set setName(newName){
+    this.name = newName;
+  },
+  get getName(){
+    return this.name;
+  }
+};
+
+export let north_parking = {
+  parkingSpots : [0, 0, 1, 0, 0, 0, 0, 0],
+  toggleSpotOccupied : function(id) {
+    this.parkingSpots[id] = !this.parkingSpots[id];
+  },
+  get getParkingSpots(){
+    return this.parkingSpots;
+  }
+};
+
+export let south_parking = {
+  parkingSpots : [0, 0, 1, 0, 0, 0, 0, 0],
+  toggleSpotOccupied : function(id) {
+    this.parkingSpots[id] = !this.parkingSpots[id];
+  },
+  get getParkingSpots(){
+    return this.parkingSpots;
+  }
+};
+
+export let west_parking = {
+  parkingSpots : [0, 0, 1, 0, 0, 0, 0, 0],
+  toggleSpotOccupied : function(id) {
+    this.parkingSpots[id] = !this.parkingSpots[id];
+  },
+  get getParkingSpots(){
+    return this.parkingSpots;
+  }
+};
+
 const App = () => {
   return (
     <Router>

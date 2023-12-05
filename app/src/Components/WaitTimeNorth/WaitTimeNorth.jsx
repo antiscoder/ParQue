@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './WaitTimeNorth.css';
 import { getUserId } from '../../sqldb';
-import { currentUser, north_queue } from '../../App';
+import { currentUser, north_queue, currentStructure } from '../../App';
 
 const WaitTimeNorth = () => {
   const [minutes, setMinutes] = useState(0);
@@ -51,7 +51,9 @@ const WaitTimeNorth = () => {
 
   const handleReadyToParkClick = () => {
     // Handle the "Ready to Park" action
+    currentStructure.setName = "north_parking";
     navigate('/parkingguide');
+    console.log(currentStructure.getName);
   };
 
   const handleHomeClick = () => {
