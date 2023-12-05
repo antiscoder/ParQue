@@ -1,28 +1,22 @@
+// RemainingTime.jsx
+
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import './RemainingTime.css';
 
 const RemainingTime = () => {
   const navigate = useNavigate();
 
-  const handleExtendTime = () => {
-    navigate('/parkingduration');
-  };
-
-  const handleHomeClick = () => {
-    // Navigate back to the home page
-    navigate('/home');
-  };
-
   const { selectedDuration } = useParams();
 
   const [hours, setHours] = useState(Math.floor((parseInt(selectedDuration) || 0) / 60));
   const [minutes, setMinutes] = useState((parseInt(selectedDuration) || 0) % 60);
+  const [selectedHour, setSelectedHour] = useState(0);
+  const [selectedMinute, setSelectedMinute] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [milliseconds, setMilliseconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
 
-  
   useEffect(() => {
     let interval;
     if (isRunning) {
@@ -44,11 +38,27 @@ const RemainingTime = () => {
         }
       }, 10);
     }
-  
+
     return () => clearInterval(interval);
   }, [selectedDuration, milliseconds, seconds, minutes, hours]);
-  
-  
+
+  const handleExtendTime = () => {
+    navigate('/parkingduration');
+  };
+
+const handleHomeClick = () => {
+  const selectedDuration = parseInt(selectedHour) * 60 + parseInt(selectedMinute);
+  // Pass remainingTime and selectedDuration to Home.jsx when navigating back to home
+  navigate('/home', {
+    state: {
+      remainingTime: seconds + minutes * 60 + hours * 3600,
+      selectedDuration: selectedDuration,
+    },
+  });
+};
+
+
+
   return (
     <div className="wait-time-container">
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>
@@ -74,20 +84,21 @@ const RemainingTime = () => {
         Extend Time
       </button>
       <button
-        onClick={handleHomeClick}
-        style={{
-          backgroundColor: '#DF7070',
-          color: 'white',
-          padding: '15px',
-          border: 'none',
-          cursor: 'pointer',
-          borderRadius: '5px',
-          fontSize: '16px',
-          marginBottom: '100px',
-        }}
-      >
-        Back to Home
-      </button>
+  onClick={handleHomeClick}
+  style={{
+    backgroundColor: '#DF7070',
+    color: 'white',
+    padding: '15px',
+    border: 'none',
+    cursor: 'pointer',
+    borderRadius: '5px',
+    fontSize: '16px',
+    marginBottom: '100px',
+  }}
+>
+  Back to Home
+</button>
+
     </div>
   );
 };
