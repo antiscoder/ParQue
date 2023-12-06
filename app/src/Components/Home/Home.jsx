@@ -10,43 +10,41 @@ const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [name, setName] = useState("");
-  const [remainingTime, setRemainingTime] = useState(null);
-  const [timer, setTimer] = useState({
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [remainingTime, setRemainingTime] = useState(location.state?.remainingTime);
+  const [hours, setHours] = useState(Math.floor(remainingTime / 3600));
+  const [minutes, setMinutes] = useState(Math.floor((remainingTime % 3600) / 60));
+  const [seconds, setSeconds] = useState(remainingTime % 60);
+  const [milliseconds, setMilliseconds] = useState(0);
+  const [isRunning, setIsRunning] = useState(true);
 
   useEffect(() => {
-    // Fetch user information when the component mounts
     const userId = getUserId(currentUser.getEmail);
     const userInfo = getUserInfo(userId);
     setName(userInfo.name);
 
-    // Set the remaining time and selected duration from the state
-    setRemainingTime(location.state?.remainingTime);
+    let interval;
+    if (isRunning) {
+      interval = setInterval(() => {
+        if (milliseconds > 0) {
+          setMilliseconds((milliseconds) => milliseconds - 1);
+        } else if (seconds > 0) {
+          setSeconds((seconds) => seconds - 1);
+          setMilliseconds(99);
+        } else if (minutes > 0) {
+          setMinutes((minutes) => minutes - 1);
+          setSeconds(59);
+          setMilliseconds(99);
+        } else if (hours > 0) {
+          setHours((hours) => hours - 1);
+          setMinutes(59);
+          setSeconds(59);
+          setMilliseconds(99);
+        }
+      }, 10);
+    }
 
-    // Log the selected duration passed from the previous component
-    console.log('Remaining Time:', location.state?.remainingTime);
-
-    // Update the timer every second
-    const intervalId = setInterval(() => {
-      if (remainingTime > 0) {
-        setRemainingTime((prev) => prev - 1);
-        setTimer((prev) => {
-          const hours = Math.floor(remainingTime / 3600);
-          const minutes = Math.floor((remainingTime % 3600) / 60);
-          const seconds = remainingTime % 60;
-          return { hours, minutes, seconds };
-        });
-      } else {
-        clearInterval(intervalId);
-        // Optionally, you can perform additional actions when the timer reaches 0
-      }
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, [location.state, remainingTime]);
+    return () => clearInterval(interval);
+  }, [milliseconds, seconds, minutes, hours, isRunning]);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -91,7 +89,7 @@ const Home = () => {
             {currentStructure.getName}
           </h3>
           <h3 style={{ color: 'white' }}>
-            Remaining Time: {`${String(timer.hours).padStart(2, '0')} : ${String(timer.minutes).padStart(2, '0')} : ${String(timer.seconds).padStart(2, '0')}`}
+            Remaining Time: {`${String(hours).padStart(2, '0')} : ${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`}
           </h3>
         </div>
       )}
