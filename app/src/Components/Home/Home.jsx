@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getUserInfo, getUserId } from '../../sqldb';
 import { currentStructure, currentUser } from '../../App';
+import parque from '../Assets/parque.png';
 
 const Home = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -60,9 +61,8 @@ const Home = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', height: '100vh' }}>
-      <h1 style={{ color: 'white', fontWeight: 'bold' }}>ParQue</h1>
+      <img src={parque} alt="" />
       <h2 style={{ color: 'white', fontStyle: 'italic' }}>Welcome, {name} </h2>
-      <h3 style={{ color: 'white' }}>Welcome to the Home Page!</h3>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <p style={{ color: 'white', cursor: 'pointer' }} onClick={toggleDropdown}>
           Previous Parking Spots ▼
