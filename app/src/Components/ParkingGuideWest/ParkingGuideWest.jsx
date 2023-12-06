@@ -1,9 +1,9 @@
 // ParkingGuide.jsx
 
 import React, { useState, useEffect } from 'react';
-import './ParkingGuide.css';
+import './ParkingGuideWest.css';
 import { useNavigate } from 'react-router-dom';
-import { currentUser, currentStructure, north_parking, south_parking, west_parking } from '../../App';
+import { currentUser, currentStructure, west_parking } from '../../App';
 
 export const ParkingSpot = (props) => {
   const [spotID, setSpotID] = useState(props.id);
@@ -11,33 +11,41 @@ export const ParkingSpot = (props) => {
 
   const handleSelectSpot = () => {
     let updatedState = spotOccupied;
-    if (spotOccupied === 1){
-      updatedState = spotOccupied + 1;
-    }
-    else if (spotOccupied === 2){
-      updatedState = spotOccupied - 1;
-    }
+    updatedState = spotOccupied + 1;
     
     setSpotOccupied((spotOccupied) => updatedState);
+    west_parking.toggleSpotOccupied(spotID);
     console.log(spotID);
     console.log(spotOccupied);
+    console.log(west_parking.getParkingSpots);
+  };
+
+  const handleDeselectSpot = () => {
+    let updatedState = spotOccupied;
+      updatedState = spotOccupied - 1;
+    
+    setSpotOccupied((spotOccupied) => updatedState);
+    west_parking.toggleSpotOccupied(spotID);
+    console.log(spotID);
+    console.log(spotOccupied);
+    console.log(west_parking.getParkingSpots);
   };
 
   return (
     <td>
       {spotOccupied===0?
-        <button onClick={handleSelectSpot} style={{ backgroundColor: '#DF7070', color: 'white', padding: '30px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px'}}>{spotID}</button>:
+        <button style={{ backgroundColor: '#DF7070', color: 'white', padding: '30px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px'}}>{spotID}</button>:
         spotOccupied===1?
         <button onClick={handleSelectSpot} style={{ backgroundColor: '#9DE592', color: 'white', padding: '30px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', }}>{spotID}</button>:
-        <button onClick={handleSelectSpot} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '30px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', }}>{spotID}</button>}
+        <button onClick={handleDeselectSpot} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '30px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', }}>{spotID}</button>}
     </td>
   );
 };
 
 export const ParkingMap = () => {
   const spots = [];
-  for (let i = 0; i < north_parking.getParkingSpots.length; i++) {
-      spots.push(<ParkingSpot key={i} id={i} state={north_parking.getParkingSpots[i]} />);
+  for (let i = 0; i < west_parking.getParkingSpots.length; i++) {
+      spots.push(<ParkingSpot key={i} id={i} state={west_parking.getParkingSpots[i]} />);
   }
 
   var rows = [], size = 4;
@@ -56,7 +64,7 @@ export const ParkingMap = () => {
   );
 };
 
-const ParkingGuide = () => {
+const ParkingGuideWest = () => {
   const navigate = useNavigate();
 
   const handleParkedClicked = () => {
@@ -77,4 +85,4 @@ const ParkingGuide = () => {
   );
 };
 
-export default ParkingGuide;
+export default ParkingGuideWest;

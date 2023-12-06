@@ -81,7 +81,7 @@ const handleHomeClick = () => {
           width: '300px',
         }}
       >
-        Extend Time
+        Edit Time
       </button>
       <button
   onClick={handleHomeClick}

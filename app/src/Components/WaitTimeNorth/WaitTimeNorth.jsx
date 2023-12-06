@@ -8,7 +8,7 @@ import { currentUser, north_queue, currentStructure } from '../../App';
 
 const WaitTimeNorth = () => {
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(5);
+  const [seconds, setSeconds] = useState(north_queue.length);
   const [milliseconds, setMilliseconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [timerExpired, setTimerExpired] = useState(false); // New state variable
@@ -52,7 +52,7 @@ const WaitTimeNorth = () => {
   const handleReadyToParkClick = () => {
     // Handle the "Ready to Park" action
     currentStructure.setName = "north_parking";
-    navigate('/parkingguide');
+    navigate('/parkingguidenorth');
     console.log(currentStructure.getName);
   };
 

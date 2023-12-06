@@ -8,8 +8,8 @@ import { getUserId } from '../../sqldb';
 
 
 const WaitTimeSouth = () => {
-  const [minutes, setMinutes] = useState(south_queue.length);
-  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(south_queue.length);
   const [milliseconds, setMilliseconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [timerExpired, setTimerExpired] = useState(false);
@@ -49,7 +49,7 @@ const WaitTimeSouth = () => {
 
   const handleReadyToParkClick = () => {
     currentStructure.setName = "south_parking";
-    navigate('/parkingguide');
+    navigate('/parkingguidesouth');
     console.log(currentStructure.getName);
   };
 

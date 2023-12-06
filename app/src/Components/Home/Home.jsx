@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getUserInfo, getUserId } from '../../sqldb';
-import { currentUser } from '../../App';
+import { currentStructure, currentUser } from '../../App';
 
 const Home = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -65,9 +65,9 @@ const Home = () => {
       <h1 style={{ color: 'white', fontWeight: 'bold' }}>ParQue</h1>
       <h2 style={{ color: 'white', fontStyle: 'italic' }}>Welcome, {name} </h2>
       <h3 style={{ color: 'white' }}>Welcome to the Home Page!</h3>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <p style={{ color: 'white', cursor: 'pointer' }} onClick={toggleDropdown}>
-          Previous Parking Spots
+          Previous Parking Spots ▼
         </p>
         {showDropdown && (
           <div style={{ marginLeft: '20px' }}>
@@ -87,6 +87,9 @@ const Home = () => {
       {/* Display remaining time if available and greater than 0 */}
       {remainingTime !== null && remainingTime > 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
+          <h3 style={{ color: 'white' }}>
+            {currentStructure.getName}
+          </h3>
           <h3 style={{ color: 'white' }}>
             Remaining Time: {`${String(timer.hours).padStart(2, '0')} : ${String(timer.minutes).padStart(2, '0')} : ${String(timer.seconds).padStart(2, '0')}`}
           </h3>
