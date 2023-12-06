@@ -7,8 +7,8 @@ import { currentUser, west_queue, currentStructure } from '../../App';
 import { getUserId } from '../../sqldb';
 
 const WaitTimeWest = () => {
-  const [minutes, setMinutes] = useState(west_queue.length);
-  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(west_queue.length);
   const [milliseconds, setMilliseconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [timerExpired, setTimerExpired] = useState(false);
@@ -50,7 +50,7 @@ const WaitTimeWest = () => {
 
   const handleReadyToParkClick = () => {
     currentStructure.setName = "west_parking";
-    navigate('/parkingguide');
+    navigate('/parkingguidewest');
     console.log(currentStructure.getName);
   };
 

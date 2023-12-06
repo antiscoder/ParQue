@@ -11,7 +11,9 @@ import WaitTimeNorth from './Components/WaitTimeNorth/WaitTimeNorth';
 import WaitTimeWest from './Components/WaitTimeWest/WaitTimeWest';
 import WaitTimeSouth from './Components/WaitTimeSouth/WaitTimeSouth';
 import RemainingTime from './Components/RemainingTime/RemainingTime';
-import ParkingGuide from './Components/ParkingGuide/ParkingGuide';
+import ParkingGuideNorth from './Components/ParkingGuideNorth/ParkingGuideNorth';
+import ParkingGuideSouth from './Components/ParkingGuideSouth/ParkingGuideSouth';
+import ParkingGuideWest from './Components/ParkingGuideWest/ParkingGuideWest';
 import ParkingDuration from './Components/ParkingDuration/ParkingDuration';
 import { createUsersTable } from './sqldb';
 
@@ -48,9 +50,9 @@ export let currentStructure = {
 };
 
 export let north_parking = {
-  parkingSpots : [0, 0, 1, 0, 0, 0, 0, 0],
+  parkingSpots : [0, 0, 1, 0, 0, 0, 1, 0],
   toggleSpotOccupied : function(id) {
-    this.parkingSpots[id] = !this.parkingSpots[id];
+    this.parkingSpots[id] === 0 ? this.parkingSpots[id] = 1 : this.parkingSpots[id] = 0 ;
   },
   get getParkingSpots(){
     return this.parkingSpots;
@@ -58,9 +60,9 @@ export let north_parking = {
 };
 
 export let south_parking = {
-  parkingSpots : [0, 0, 1, 0, 0, 0, 0, 0],
+  parkingSpots : [1, 0, 1, 0, 0, 0, 0, 0],
   toggleSpotOccupied : function(id) {
-    this.parkingSpots[id] = !this.parkingSpots[id];
+    this.parkingSpots[id] === 0 ? this.parkingSpots[id] = 1 : this.parkingSpots[id] = 0 ;
   },
   get getParkingSpots(){
     return this.parkingSpots;
@@ -68,9 +70,9 @@ export let south_parking = {
 };
 
 export let west_parking = {
-  parkingSpots : [0, 0, 1, 0, 0, 0, 0, 0],
+  parkingSpots : [0, 1, 1, 0, 0, 0, 0, 0],
   toggleSpotOccupied : function(id) {
-    this.parkingSpots[id] = !this.parkingSpots[id];
+    this.parkingSpots[id] === 0 ? this.parkingSpots[id] = 1 : this.parkingSpots[id] = 0 ;
   },
   get getParkingSpots(){
     return this.parkingSpots;
@@ -109,7 +111,9 @@ const App = () => {
         <Route path="/remainingtime/:selectedDuration" element={<RemainingTime />} />
 
         {/* This route may need to be updated based on the final route */}
-        <Route path="/parkingguide" element={<ParkingGuide />} />
+        <Route path="/parkingguidenorth" element={<ParkingGuideNorth />} />
+        <Route path="/parkingguidewest" element={<ParkingGuideWest />} />
+        <Route path="/parkingguidesouth" element={<ParkingGuideSouth />} />
 
         {/* This route may need to be updated based on the final route */}
         <Route path="/parkingduration" element={<ParkingDuration />} />
