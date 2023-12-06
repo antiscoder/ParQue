@@ -66,9 +66,18 @@ export const ParkingMap = () => {
 
 const ParkingGuideNorth = () => {
   const navigate = useNavigate();
+  const [selectedSpot, setSelectedSpot] = useState(null); // Track the selected parking spot
 
   const handleParkedClicked = () => {
-    navigate('/parkingduration');
+    const occupiedSpotCount = north_parking.getParkingSpots.reduce((count, spot) => count + spot, 0);
+  
+    if (occupiedSpotCount < 1) {
+      alert('Please only select one parking spot.')
+    } else if (occupiedSpotCount > 1) {
+      alert('Please select a parking spot.');
+    } else {
+      navigate('/parkingduration');
+    }
   };
 
   return (
