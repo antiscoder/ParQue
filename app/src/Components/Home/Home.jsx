@@ -84,11 +84,11 @@ const Home = () => {
       </div>
       {/* Display remaining time if available and greater than 0 */}
       {remainingTime !== null && remainingTime > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
-          <h3 style={{ color: 'white' }}>
+        <div style={{ display: 'flex', backgroundColor: 'white', borderRadius: '20px', flexDirection: 'column', alignItems: 'center', marginTop: '20px', padding: '0px 30px 0px 30px'}}>
+          <h3 style={{ color: '#444660' }}>
             {currentStructure.getName}
           </h3>
-          <h3 style={{ color: 'white' }}>
+          <h3 style={{ color: '#444660' }}>
             Remaining Time: {`${String(hours).padStart(2, '0')} : ${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`}
           </h3>
         </div>
