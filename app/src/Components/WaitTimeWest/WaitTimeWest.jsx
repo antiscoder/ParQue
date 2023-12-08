@@ -7,7 +7,7 @@ import { currentUser, west_queue, currentStructure } from '../../App';
 import { getUserId } from '../../sqldb';
 
 const WaitTimeWest = () => {
-  const [minutes, setMinutes] = useState(west_queue.length);
+  const [minutes, setMinutes] = useState(west_queue.length - 1);
   const [seconds, setSeconds] = useState(0);
   const [milliseconds, setMilliseconds] = useState(0);
   const [currentPosition, setCurrentPosition] = useState(west_queue.length);
@@ -34,6 +34,9 @@ const WaitTimeWest = () => {
           }
         } else {
           // Timer has expired
+          if (currentPosition > 0) {
+            setCurrentPosition((currentPosition) => currentPosition - 1);
+          }
           setIsRunning(false);
           setTimerExpired(true);
         }
@@ -69,7 +72,7 @@ const WaitTimeWest = () => {
     <div className="wait-time-container">
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>West Garage</h1>
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '60px', textDecorationLine: 'underline' }}>Est Wait Time</h1>
-      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>{String(minutes).padStart(2, '0')} Minutes</h1>
+      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>{String(minutes).padStart(2, '0')} : {String(seconds).padStart(2, '0')}</h1>
       <h2 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Queue Position: {currentPosition}</h2>
 
       {timerExpired ? (
