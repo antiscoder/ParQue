@@ -15,6 +15,9 @@ import ParkingGuideNorth from './Components/ParkingGuideNorth/ParkingGuideNorth'
 import ParkingGuideSouth from './Components/ParkingGuideSouth/ParkingGuideSouth';
 import ParkingGuideWest from './Components/ParkingGuideWest/ParkingGuideWest';
 import ParkingDuration from './Components/ParkingDuration/ParkingDuration';
+import ParkingDurationNorth from './Components/ParkingDurationNorth/ParkingDurationNorth';
+import ParkingDurationWest from './Components/ParkingDurationWest/ParkingDurationWest';
+import ParkingDurationSouth from './Components/ParkingDurationSouth/ParkingDurationSouth';
 import { createUsersTable } from './sqldb';
 
 createUsersTable();
@@ -50,31 +53,68 @@ export let currentStructure = {
 };
 
 export let north_parking = {
-  parkingSpots : [0, 0, 1, 0, 0, 0, 1, 0],
-  toggleSpotOccupied : function(id) {
-    this.parkingSpots[id] === 0 ? this.parkingSpots[id] = 1 : this.parkingSpots[id] = 0 ;
+  originalParkingSpots: [0, 0, 1, 0, 0, 0, 1, 0], // Initial/original state
+  parkingSpots: [0, 0, 1, 0, 0, 0, 1, 0], // Current state
+
+  toggleSpotOccupied: function(id) {
+    this.parkingSpots[id] === 0 ? this.parkingSpots[id] = 1 : this.parkingSpots[id] = 0;
   },
-  get getParkingSpots(){
+
+  // Function to update the current state of parking spots
+  updateParkingSpots: function(newParkingSpots) {
+    this.parkingSpots = newParkingSpots;
+  },
+
+  // Function to revert to the original state of parking spots
+  restoreOriginalState: function() {
+    this.parkingSpots = [...this.originalParkingSpots];
+  },
+
+  get getParkingSpots() {
     return this.parkingSpots;
   }
 };
 
 export let south_parking = {
+  originalParkingSpots: [1, 0, 1, 0, 0, 0, 0, 0],
   parkingSpots : [1, 0, 1, 0, 0, 0, 0, 0],
-  toggleSpotOccupied : function(id) {
-    this.parkingSpots[id] === 0 ? this.parkingSpots[id] = 1 : this.parkingSpots[id] = 0 ;
+  toggleSpotOccupied: function(id) {
+    this.parkingSpots[id] === 0 ? this.parkingSpots[id] = 1 : this.parkingSpots[id] = 0;
   },
-  get getParkingSpots(){
+
+  // Function to update the current state of parking spots
+  updateParkingSpots: function(newParkingSpots) {
+    this.parkingSpots = newParkingSpots;
+  },
+
+  // Function to revert to the original state of parking spots
+  restoreOriginalState: function() {
+    this.parkingSpots = [...this.originalParkingSpots];
+  },
+
+  get getParkingSpots() {
     return this.parkingSpots;
   }
 };
 
 export let west_parking = {
+  originalParkingSpots: [0, 1, 1, 0, 0, 0, 0, 0],
   parkingSpots : [0, 1, 1, 0, 0, 0, 0, 0],
-  toggleSpotOccupied : function(id) {
-    this.parkingSpots[id] === 0 ? this.parkingSpots[id] = 1 : this.parkingSpots[id] = 0 ;
+  toggleSpotOccupied: function(id) {
+    this.parkingSpots[id] === 0 ? this.parkingSpots[id] = 1 : this.parkingSpots[id] = 0;
   },
-  get getParkingSpots(){
+
+  // Function to update the current state of parking spots
+  updateParkingSpots: function(newParkingSpots) {
+    this.parkingSpots = newParkingSpots;
+  },
+
+  // Function to revert to the original state of parking spots
+  restoreOriginalState: function() {
+    this.parkingSpots = [...this.originalParkingSpots];
+  },
+
+  get getParkingSpots() {
     return this.parkingSpots;
   }
 };
@@ -118,7 +158,14 @@ const App = () => {
         {/* This route may need to be updated based on the final route */}
         <Route path="/parkingduration" element={<ParkingDuration />} />
 
+        {/* This route may need to be updated based on the final route */}
+        <Route path="/parkingdurationnorth" element={<ParkingDurationNorth />} />
 
+        {/* This route may need to be updated based on the final route */}
+        <Route path="/parkingdurationwest" element={<ParkingDurationWest />} />
+
+        {/* This route may need to be updated based on the final route */}
+        <Route path="/parkingdurationsouth" element={<ParkingDurationSouth />} />
       </Routes>
     </Router>
   );

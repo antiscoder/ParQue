@@ -66,20 +66,30 @@ export const ParkingMap = () => {
 
 const ParkingGuideSouth = () => {
   const navigate = useNavigate();
-  const [selectedSpot, setSelectedSpot] = useState(null); // Track the selected parking spot
+  const [parkingSpots, setParkingSpots] = useState(south_parking.getParkingSpots);
+  const [initialParkingSpots, setInitialParkingSpots] = useState([]);
 
-  const handleParkedClicked = () => {
-    const occupiedSpotCount = south_parking.getParkingSpots.reduce((count, spot) => count + spot, 0);
-  
-    if (occupiedSpotCount < 1) {
-      alert('Please only select one parking spot.')
-    } else if (occupiedSpotCount > 1) {
-      alert('Please select a parking spot.');
+  useEffect(() => {
+    // Log the initial parking spots array when the component mounts
+    setInitialParkingSpots([...south_parking.getParkingSpots]);
+  }, []);
+
+   const handleParkedClicked = () => {
+    // Get the count of 1s in the current state
+    const countBefore = initialParkingSpots.reduce((count, spot) => count + (spot === 1 ? 1 : 0), 0);
+
+    // Get the count of 1s in the updated state
+    const countAfter = south_parking.getParkingSpots.reduce((count, spot) => count + (spot === 1 ? 1 : 0), 0);
+
+    // Check if exactly one spot changed from 1 to 0
+    if (countBefore === countAfter + 1) {
+      console.log("Parking spots have changed:", south_parking.getParkingSpots);
+      navigate('/parkingdurationsouth');
     } else {
-      navigate('/parkingduration');
+      alert('Please select exactly one parking spot before clicking "I Have Parked".');
     }
   };
-
+  
   return (
     <div className="parking-guide-container">
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>{currentStructure.getName}</h1>
