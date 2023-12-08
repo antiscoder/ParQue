@@ -8,8 +8,8 @@ import { getUserId } from '../../sqldb';
 
 
 const WaitTimeSouth = () => {
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(south_queue.length - 1);
+  const [minutes, setMinutes] = useState(south_queue.length - 1);
+  const [seconds, setSeconds] = useState(0);
   const [milliseconds, setMilliseconds] = useState(0);
   const [currentPosition, setCurrentPosition] = useState(south_queue.length);
   const [isRunning, setIsRunning] = useState(true);
