@@ -7,11 +7,12 @@ import { getUserId } from '../../sqldb';
 import { currentUser, north_queue, currentStructure } from '../../App';
 
 const WaitTimeNorth = () => {
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(north_queue.length);
+  const [minutes, setMinutes] = useState(north_queue.length);
+  const [seconds, setSeconds] = useState();
   const [milliseconds, setMilliseconds] = useState(0);
+  const [currentPosition, setCurrentPosition] = useState(north_queue.length);
   const [isRunning, setIsRunning] = useState(true);
-  const [timerExpired, setTimerExpired] = useState(false); // New state variable
+  const [timerExpired, setTimerExpired] = useState(false);
 
   useEffect(() => {
     let interval;
@@ -26,6 +27,11 @@ const WaitTimeNorth = () => {
           setMinutes((minutes) => minutes - 1);
           setSeconds(59);
           setMilliseconds(99);
+
+          // Decrement the queue position after every minute
+          if (currentPosition > 0) {
+            setCurrentPosition((currentPosition) => currentPosition - 1);
+          }
         } else {
           // Timer has expired
           setIsRunning(false);
@@ -34,7 +40,7 @@ const WaitTimeNorth = () => {
       }, 10);
     }
     return () => clearInterval(interval);
-  }, [milliseconds, seconds, minutes, isRunning]);
+  }, [milliseconds, seconds, minutes, isRunning, currentPosition]);
 
   const navigate = useNavigate();
   const userId = getUserId(currentUser.getEmail);
@@ -45,8 +51,9 @@ const WaitTimeNorth = () => {
     if (index !== -1) {
       north_queue.splice(index, 1);
     }
+    console.log('User successfully left the queue');
     // Navigate to the home page or another appropriate location
-    navigate('/home');
+    navigate('/joinqueue');
   };
 
   const handleReadyToParkClick = () => {
@@ -65,7 +72,7 @@ const WaitTimeNorth = () => {
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>North Garage</h1>
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '60px', textDecorationLine: 'underline' }}>Est Wait Time</h1>
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>{String(minutes).padStart(2, '0')} : {String(seconds).padStart(2, '0')}</h1>
-      <h2 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Queue Position: {north_queue.length}</h2>
+      <h2 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Queue Position: {currentPosition}</h2>
 
       {/* Conditionally render the button based on the timer state */}
       {timerExpired ? (
@@ -77,8 +84,8 @@ const WaitTimeNorth = () => {
           Leave Queue
         </button>
       )}
-        <button onClick={handleHomeClick} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginBottom: '150px' }}>
-          Back To Home
+      <button onClick={handleHomeClick} style={{ backgroundColor: '#78B0E8', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginBottom: '150px' }}>
+        Back To Home
       </button>
     </div>
   );

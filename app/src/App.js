@@ -19,7 +19,7 @@ import { createUsersTable } from './sqldb';
 
 createUsersTable();
 
-export let north_queue = [44, 55, 33];
+export let north_queue = [];
 
 export let west_queue = [44, 55, 33];
 
