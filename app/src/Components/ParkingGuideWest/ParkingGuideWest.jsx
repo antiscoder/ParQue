@@ -84,7 +84,7 @@ const ParkingGuideWest = () => {
     // Check if exactly one spot changed from 1 to 0
     if (countBefore === countAfter + 1) {
       console.log("Parking spots have changed:", west_parking.getParkingSpots);
-      navigate('/parkingdurationsouth');
+      navigate('/parkingdurationwest');
     } else {
       alert('Please select exactly one parking spot before clicking "I Have Parked".');
     }
