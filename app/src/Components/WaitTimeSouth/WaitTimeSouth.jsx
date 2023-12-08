@@ -8,9 +8,10 @@ import { getUserId } from '../../sqldb';
 
 
 const WaitTimeSouth = () => {
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(south_queue.length);
+  const [minutes, setMinutes] = useState(south_queue.length);
+  const [seconds, setSeconds] = useState(0);
   const [milliseconds, setMilliseconds] = useState(0);
+  const [currentPosition, setCurrentPosition] = useState(south_queue.length);
   const [isRunning, setIsRunning] = useState(true);
   const [timerExpired, setTimerExpired] = useState(false);
 
@@ -27,14 +28,20 @@ const WaitTimeSouth = () => {
           setMinutes((minutes) => minutes - 1);
           setSeconds(59);
           setMilliseconds(99);
+
+          // Decrement the queue position after every minute
+          if (currentPosition > 0) {
+            setCurrentPosition((currentPosition) => currentPosition - 1);
+          }
         } else {
+          // Timer has expired
           setIsRunning(false);
           setTimerExpired(true);
         }
-      }, 10); // Set interval to 1000 milliseconds for a 1-second countdown
+      }, 10);
     }
     return () => clearInterval(interval);
-  }, [milliseconds, seconds, minutes, isRunning]);
+  }, [milliseconds, seconds, minutes, isRunning, currentPosition]);
 
   const navigate = useNavigate();
   const userId = getUserId(currentUser.getEmail);
@@ -44,7 +51,8 @@ const WaitTimeSouth = () => {
     if (index !== -1) {
       south_queue.splice(index, 1);
     }
-    navigate('/home');
+    console.log('User successfully left the queue');
+    navigate('/joinqueue');
   };
 
   const handleReadyToParkClick = () => {
@@ -61,8 +69,8 @@ const WaitTimeSouth = () => {
     <div className="wait-time-container">
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>South Garage</h1>
       <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '60px', textDecorationLine: 'underline' }}>Est Wait Time</h1>
-      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>{String(minutes).padStart(2, '0')} : {String(seconds).padStart(2, '0')}</h1>
-      <h2 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Queue Position: {south_queue.length}</h2>
+      <h1 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto', fontSize: '100px' }}>{String(minutes).padStart(2, '0')} Minutes</h1>
+      <h2 style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 'auto', marginBottom: 'auto' }}>Queue Position: {currentPosition}</h2>
 
       {timerExpired ? (
         <button onClick={handleReadyToParkClick} style={{ backgroundColor: '#9DE592', color: 'white', padding: '15px', border: 'none', cursor: 'pointer', borderRadius: '5px', fontSize: '16px', marginBottom: '10px' }}>
