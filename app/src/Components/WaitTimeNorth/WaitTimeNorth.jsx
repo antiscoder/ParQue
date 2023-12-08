@@ -7,8 +7,8 @@ import { getUserId } from '../../sqldb';
 import { currentUser, north_queue, currentStructure } from '../../App';
 
 const WaitTimeNorth = () => {
-  const [minutes, setMinutes] = useState(north_queue.length);
-  const [seconds, setSeconds] = useState();
+  const [minutes, setMinutes] = useState(north_queue.length - 1);
+  const [seconds, setSeconds] = useState(0);
   const [milliseconds, setMilliseconds] = useState(0);
   const [currentPosition, setCurrentPosition] = useState(north_queue.length);
   const [isRunning, setIsRunning] = useState(true);
@@ -34,6 +34,9 @@ const WaitTimeNorth = () => {
           }
         } else {
           // Timer has expired
+          if (currentPosition > 0) {
+            setCurrentPosition((currentPosition) => currentPosition - 1);
+          }
           setIsRunning(false);
           setTimerExpired(true);
         }
