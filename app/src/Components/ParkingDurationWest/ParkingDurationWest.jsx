@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './ParkingDuration.css';
+import './ParkingDurationWest.css';
 import { useNavigate } from 'react-router-dom';
-import { north_parking, west_parking, south_parking } from '../../App';
+import { west_parking } from '../../App';
 
 
 const ParkingGuide = () => {
@@ -31,10 +31,10 @@ const ParkingGuide = () => {
   
   const handleChangeParkingSpot = () => {
     // Revert changes made during the parking duration
-    north_parking.restoreOriginalState();
+    west_parking.restoreOriginalState();
   
-    // Navigate back to ParkingGuideNorth
-    navigate('/parkingguidenorth');
+    // Navigate back to ParkingGuideWest
+    navigate('/parkingguidewest');
   };
 
   const renderOptions = (maxValue, step = 1) => {

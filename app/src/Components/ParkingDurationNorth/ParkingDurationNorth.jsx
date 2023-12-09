@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './ParkingDuration.css';
+import './ParkingDurationNorth.css';
 import { useNavigate } from 'react-router-dom';
-import { north_parking, west_parking, south_parking } from '../../App';
+import { north_parking } from '../../App';
 
 
 const ParkingGuide = () => {
